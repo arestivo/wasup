@@ -144,7 +144,8 @@ class Assignment {
 		$file = 'uploads/' . $_SESSION['username'] . '/' . $data->name . '.txt';
 		if (!$_POST[$data->name]) @unlink($file);
 		else {
-			$f = fopen($file, 'w') or die("can't open file");
+			$f = fopen($file, 'w');
+			if (!$f) {$_SESSION['errors'][] = 'Failed saving ' . $data->name; return;}
 			fwrite($f, $_POST[$data->name]);
 			fclose($f);
 		}
