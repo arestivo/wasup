@@ -22,6 +22,7 @@ class PostgreSQLAuthenticator extends Authenticator {
 		$_SESSION['username'] = $user;
 		if ($this->isAdmin($user)) $_SESSION['type'] = 'admin'; 
 		else $_SESSION['type'] = 'user';
+		$_SESSION['messages'][] = 'Authentication successful.';
 
 		return true;
 	}

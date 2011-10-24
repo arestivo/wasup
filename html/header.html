@@ -42,9 +42,21 @@
 			foreach ($_SESSION['errors'] as $error) { 
 		?>
 			<div class="alert-message error">
-				    <p><strong><?=$error?></p>
-			     </div>
+			    <p><strong><?=$error?></p>
+		     </div>
 		<?php
 			}
 			unset ($_SESSION['errors']);
+		?>
+
+		<?php
+			if (isset($_SESSION['messages']) && is_array($_SESSION['messages']))
+			foreach ($_SESSION['messages'] as $message) { 
+		?>
+			<div class="alert-message success">
+			    <p><strong><?=$message?></p>
+		     </div>
+		<?php
+			}
+			unset ($_SESSION['messages']);
 		?>
