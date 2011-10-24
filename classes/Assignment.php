@@ -4,7 +4,7 @@ class Assignment {
 
 	function __construct($config) {
 		foreach ($config['data'] as $data) {
-			$this->data[] = json_decode($data);
+			$this->data[] = json_decode(str_replace('\'', '"', $data));
 		}
 		$this->date = $config['date'];
 		$this->title = $config['title'];

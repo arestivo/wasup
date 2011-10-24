@@ -4,7 +4,7 @@ class Authenticator {
 
 	function __construct($config) {
 		foreach ($config['users'] as $user) {
-			$this->users[] = json_decode($user);
+			$this->users[] = json_decode(str_replace('\'', '"', $user));
 		}
 	}
 
