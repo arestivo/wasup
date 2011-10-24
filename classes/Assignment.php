@@ -45,7 +45,9 @@ class Assignment {
 	function handleUpload() {
 		@mkdir('uploads/' . $_SESSION['username']);
 		$file = 'uploads/' . $_SESSION['username'] . '/uploaded.txt';
-		$f = fopen($file, 'w') or die("can't open file");
+		$f = @fopen($file, 'w');
+		if (!$f) {$_SESSION['errors'][] = 'Failed saving ' . $data->name; return;}
+
 		fwrite($f, time());
 		fclose($f);
 		
@@ -78,7 +80,9 @@ class Assignment {
 			else
 				$this->showText($data, $folder . $data->name);
 
-		$this->showDate(file_get_contents($folder . 'uploaded.txt'));
+		if (file_exists($folder . 'uploaded.txt'))
+			$this->showDate(file_get_contents($folder . 'uploaded.txt'));
+		else echo "<td></td>";
 		echo '</tr>';
 	}
 
