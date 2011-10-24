@@ -14,7 +14,7 @@ class PostgreSQLAuthenticator extends Authenticator {
 			$_SESSION['errors'][] = 'User not allowed.';
 			return false;
 		}
-		if (!pg_connect("host=" . $this->host . " dbname=template1 user=$user password=$pass")) {
+		if (!@pg_connect("host=" . $this->host . " dbname=template1 user=$user password=$pass")) {
 			$_SESSION['errors'][] = 'Authentication failed.';
 			return false;
 		}
