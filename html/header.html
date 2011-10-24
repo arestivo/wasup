@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Wasup</title>
+		<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<meta charset="utf-8">
+	</head>
+	<body>
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="."><?=$wasup->assignment->course?></a>
+		<?if ($wasup->authenticator->isLoggedIn()) { ?>
+          <form action="actionlogout.php" class="pull-right">
+			<label><?=$_SESSION['username']?></label>
+            <button class="btn" type="submit">Logout</button>
+          </form>
+		<? } else {?>
+          <form action="login.php" class="pull-right">
+			<input type="hidden" name="from" value="index" />
+            <button class="btn" type="submit">Login</button>
+          </form>
+		<? } ?>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <div class="page-header">
+          <h1><?=$wasup->assignment->title?> <small>Assignment Upload</small></h1>
+        </div>
+        <div class="row">
+          <div class="span14">
+
+		<?php
+			if (isset($_SESSION['errors']) && is_array($_SESSION['errors']))
+			foreach ($_SESSION['errors'] as $error) { 
+		?>
+			<div class="alert-message error">
+				    <p><strong><?=$error?></p>
+			     </div>
+		<?php
+			}
+			unset ($_SESSION['errors']);
+		?>
