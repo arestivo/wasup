@@ -46,7 +46,7 @@ class Assignment {
 		@mkdir('uploads/' . $_SESSION['username']);
 		$file = 'uploads/' . $_SESSION['username'] . '/uploaded.txt';
 		$f = @fopen($file, 'w');
-		if (!$f) {$_SESSION['errors'][] = 'Failed saving ' . $data->name; return;}
+		if (!$f) {$_SESSION['errors'][] = 'Failed saving submission timestamp'; return;}
 
 		fwrite($f, time());
 		fclose($f);
@@ -149,19 +149,24 @@ class Assignment {
 		if (!$_POST[$data->name]) @unlink($file);
 		else {
 			$f = fopen($file, 'w');
-			if (!$f) {$_SESSION['errors'][] = 'Failed saving ' . $data->name; return;}
+			if (!$f) {
+				$_SESSION['errors'][] = 'Failed saving ' . ucfirst($data->name); 	
+				return;
+			}
 			fwrite($f, $_POST[$data->name]);
 			fclose($f);
 		}
 	}
 
 	function saveFile($data) {
+		if ($_FILES[$data->name]['name'] == '') return;
 		$extension = $this->getExtension($_FILES[$data->name]['name']);
 		if (strpos($data->extensions, $extension)===false) 
 			$_SESSION['errors'][] = "Can't upload file. Extension not allowed: " . $extension;
 		else {
 			$file = 'uploads/' . $_SESSION['username'] . '/' . $data->name . $extension;
-			move_uploaded_file($_FILES[$data->name]['tmp_name'], $file);
+			if (!move_uploaded_file($_FILES[$data->name]['tmp_name'], $file))
+				$_SESSION['errors'][] = "Failed uploading " . ucfirst($data->name);
 		}
 	}
 
