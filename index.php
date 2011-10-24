@@ -11,5 +11,6 @@ if ($wasup->testUploadPerms()) {
 	echo '<form><a class="btn" href="upload.php">Upload</a></form>';
 	$wasup->assignment->listUploads();
 }
+
 include('html/footer.html');
 ?>
