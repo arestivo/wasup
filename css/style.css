@@ -49,18 +49,15 @@
       }
 
 	.overdue {
-		background-color: #C66;
+		border-right: 5px solid #A44;
 	}
 
 	.ontime, .uploaded {
-		background-color: #6C6;
+		border-right: 5px solid #4A4;
 	}
 
-	td a {
-		color: white;
-	}
 
-	.topbar label {
+	.topbar {
 		color: white;
 		padding-right: 10px;
 	}

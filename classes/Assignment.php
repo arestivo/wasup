@@ -60,7 +60,7 @@ class Assignment {
 	
 	function listUploads() {
 		$files = scandir('uploads');
-		echo '<h2>Uploads</h2>';
+		echo '<h2>Delivered Assignments</h2>';
 		echo '<table>';
 		echo '<tr><th>Username</th>';
 		foreach ($this->data as $data) echo '<th>'.ucfirst($data->name).'</th>';
@@ -95,26 +95,47 @@ class Assignment {
 
 	function showText($data, $file) {	
 		$file .= '.txt';
-		if (file_exists($file)) $class='uploaded'; else $class='';
-		echo "<td class=\"$class\">";
+		if (file_exists($file)) $state='Edited'; else $state='';
+		echo "<td>";
 		if (file_exists($file) && isset($data->show) && $data->show)
 			echo file_get_contents($file);
-		else echo "&nbsp;";
+		else echo $state;
 		echo '</td>';
 	}
 
 	function showFile($user, $data, $file) {	
 		$extensions = explode('|', $data->extensions);
-		$class = '';
+		$state = '';
 		foreach ($extensions as $ext)
-			if (file_exists($file . $ext)) $class='uploaded'; 
-		echo "<td class=\"$class\">";
+			if (file_exists($file . $ext)) $state='Uploaded'; 
+		echo "<td>";
 		if (isset($_SESSION['type']) && $_SESSION['type'] == 'admin')
 			echo '<a href="download.php?username='.$user.'&name=' . $data->name . '">Download</a>';
 		else if (isset($_SESSION['username']) && $_SESSION['username'] == $user) 
 			echo '<a href="download.php?name=' . $data->name . '">Download</a>';
-		else echo "&nbsp;";
+		else echo $state;
 		echo '</td>';
+	}
+
+	function downloadAll() {
+		if ($_SESSION['type'] != 'admin') {
+			header('HTTP/1.1 404 Not Found');
+			echo '<h1>404: File not found!</h1>';		
+		}
+		$zip = new ZipArchive();
+		$file = tempnam('/tmp/', '');
+		unlink($file);
+		exec("tar czf $file uploads/*");
+		header('Content-Description: File Transfer');
+		header('Content-Type: application/octet-stream');
+		header('Content-Disposition: attachment; filename=assignments.tar.gz');
+		header('Content-Transfer-Encoding: binary');
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		header('Pragma: public');
+		header('Content-Length: ' . filesize($file));				
+		readfile($file);
+		unlink($file);
 	}
 
 	function download($name, $username) {

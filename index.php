@@ -8,8 +8,8 @@ $wasup->readConfiguration();
 include('html/header.html');
 
 if ($wasup->testUploadPerms()) {
-	echo '<form><a class="btn" href="upload.php">Upload</a></form>';
 	$wasup->assignment->listUploads();
+	echo '<form><a class="btn" href="upload.php">Upload Assignment</a></form>';
 }
 
 include('html/footer.html');
