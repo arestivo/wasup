@@ -1,4 +1,5 @@
 <?php
+session_name('wasup_session');
 session_start();
 
 class Wasup {
