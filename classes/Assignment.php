@@ -180,7 +180,10 @@ class Assignment {
 	}
 
 	function saveFile($data) {
-		if ($_FILES[$data->name]['name'] == '') return;
+		if ($_FILES[$data->name]['name'] == '') {
+			$_SESSION['errors'][] = "File upload failed!";
+      return;
+    }
 		$extension = $this->getExtension($_FILES[$data->name]['name']);
 		if (strpos($data->extensions, $extension)===false) 
 			$_SESSION['errors'][] = "Can't upload file. Extension not allowed: " . $extension;
