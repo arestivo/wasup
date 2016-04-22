@@ -12,20 +12,20 @@
       <div class="fill">
         <div class="container">
           <a class="brand" href="."><?=$wasup->assignment->course?></a>
-		<?if ($wasup->authenticator->isLoggedIn()) { ?>
+		<?php if ($wasup->authenticator->isLoggedIn()) { ?>
           <form action="actionlogout.php" class="pull-right">
-			<?if ($_SESSION['type'] == 'admin') { ?>
+			<?php if ($_SESSION['type'] == 'admin') { ?>
 			<a href="downloadall.php">Download All</a> | 
-			<? } ?>
+			<?php  } ?>
 			<?=$_SESSION['username']?>
             <button class="btn" type="submit">Logout</button>
           </form>
-		<? } else {?>
+		<?php  } else {?>
           <form action="login.php" class="pull-right">
 			<input type="hidden" name="from" value="index" />
             <button class="btn" type="submit">Login</button>
           </form>
-		<? } ?>
+		<?php  } ?>
         </div>
       </div>
 
@@ -40,26 +40,26 @@
         <div class="row">
           <div class="span14">
 
-		<?php
+		<?php 
 			if (isset($_SESSION['errors']) && is_array($_SESSION['errors']))
 			foreach ($_SESSION['errors'] as $error) { 
 		?>
 			<div class="alert-message error">
 			    <p><strong><?=$error?></p>
 		     </div>
-		<?php
+		<?php 
 			}
 			unset ($_SESSION['errors']);
 		?>
 
-		<?php
+		<?php 
 			if (isset($_SESSION['messages']) && is_array($_SESSION['messages']))
 			foreach ($_SESSION['messages'] as $message) { 
 		?>
 			<div class="alert-message success">
 			    <p><strong><?=$message?></p>
 		     </div>
-		<?php
+		<?php 
 			}
 			unset ($_SESSION['messages']);
 		?>
