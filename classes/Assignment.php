@@ -109,10 +109,14 @@ class Assignment {
 		foreach ($extensions as $ext)
 			if (file_exists($file . $ext)) $state='Uploaded'; 
 		echo "<td>";
-		if (isset($_SESSION['type']) && $_SESSION['type'] == 'admin')
-			echo '<a href="download.php?username='.$user.'&name=' . $data->name . '">Download</a>';
-		else if (isset($_SESSION['username']) && $_SESSION['username'] == $user) 
-			echo '<a href="download.php?name=' . $data->name . '">Download</a>';
+		if (isset($_SESSION['type']) && $_SESSION['type'] == 'admin') {
+			if ($state == 'Uploaded') echo '<a href="download.php?name=' . $data->name . '">Download</a>';
+      else echo 'Not Uploaded';
+    }
+		else if (isset($_SESSION['username']) && $_SESSION['username'] == $user) {
+			if ($state == 'Uploaded') echo '<a href="download.php?name=' . $data->name . '">Download</a>';
+      else echo 'Not Uploaded';
+    }
 		else echo $state;
 		echo '</td>';
 	}
