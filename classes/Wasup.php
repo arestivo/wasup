@@ -7,7 +7,7 @@ class Wasup {
 	function readConfiguration() {
 		$files = scandir('config');
 		foreach ($files as $file) 
-			if ($file[0] != '.' && $file[strlen($file) - 1] != '~') 
+			if ($file[0] != '.' && substr($file,strlen($file) - 4) == '.ini') 
 				$this->readConfigFile($file);
 	}
 
