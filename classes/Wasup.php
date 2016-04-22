@@ -1,5 +1,5 @@
 <?php
-session_name('wasup_session');
+session_name('wasup_session_' . basename(dirname($_SERVER['REQUEST_URI'])));
 session_start();
 
 class Wasup {
