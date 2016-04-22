@@ -15,7 +15,8 @@
 		<?php if ($wasup->authenticator->isLoggedIn()) { ?>
           <form action="actionlogout.php" class="pull-right">
 			<?php if ($_SESSION['type'] == 'admin') { ?>
-			<a href="downloadall.php">Download All</a> | 
+        <?= ini_get('upload_max_filesize'), "/" , ini_get('post_max_size');?>
+			  <a href="downloadall.php">Download All</a> | 
 			<?php  } ?>
 			<?=$_SESSION['username']?>
             <button class="btn" type="submit">Logout</button>
