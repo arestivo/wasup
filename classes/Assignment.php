@@ -103,18 +103,33 @@ class Assignment {
 		echo '</td>';
 	}
 
+  function formatBytes($bytes, $precision = 2) { 
+      $units = array('B', 'KB', 'MB', 'GB', 'TB'); 
+
+      $bytes = max($bytes, 0); 
+      $pow = floor(($bytes ? log($bytes) : 0) / log(1024)); 
+      $pow = min($pow, count($units) - 1); 
+
+      $bytes /= (1 << (10 * $pow)); 
+
+      return round($bytes, $precision) . ' ' . $units[$pow]; 
+  } 
+
 	function showFile($user, $data, $file) {	
 		$extensions = explode('|', $data->extensions);
 		$state = '';
 		foreach ($extensions as $ext)
-			if (file_exists($file . $ext)) $state='Uploaded'; 
+			if (file_exists($file . $ext)) {
+        $state='Uploaded'; 
+        $filename = $file . $ext;
+      }
 		echo "<td>";
 		if (isset($_SESSION['type']) && $_SESSION['type'] == 'admin') {
-			if ($state == 'Uploaded') echo '<a href="download.php?username='.$user.'&name=' . $data->name . '">Download</a>';
+			if ($state == 'Uploaded') echo '<a href="download.php?username='.$user.'&name=' . $data->name . '">Download</a> (' . $this->formatBytes(filesize($filename)) . ')';
       else echo 'Not Uploaded';
     }
 		else if (isset($_SESSION['username']) && $_SESSION['username'] == $user) {
-			if ($state == 'Uploaded') echo '<a href="download.php?name=' . $data->name . '">Download</a>';
+			if ($state == 'Uploaded') echo '<a href="download.php?name=' . $data->name . '">Download</a> (' . $this->formatBytes(filesize($filename)) . ')';
       else echo 'Not Uploaded';
     }
 		else echo $state;
