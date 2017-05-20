@@ -1,5 +1,4 @@
 <?php
-
 require_once('classes/Wasup.php');
 
 $wasup = new Wasup();
@@ -17,7 +16,7 @@ if ($wasup->testUploadPerms()) {
 <script>
   updateRemaining();
   function updateRemaining() {
-    var d1 = new Date('<?=$wasup->assignment->date?>');
+    var d1 = new Date('<?=str_replace(" ", "T", $wasup->assignment->date)?>');
     var d2 = new Date();
     var delta = Math.floor(d1.getTime() - d2.getTime()) / 1000;
     if (delta < 0) {
